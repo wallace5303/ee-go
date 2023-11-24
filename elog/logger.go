@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"ee-go/eerror"
+	"github.com/wallace5303/ee-go/eerror"
 
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"

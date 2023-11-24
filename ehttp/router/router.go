@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"ee-go/elog"
+	"github.com/wallace5303/ee-go/elog"
 
 	"github.com/gin-gonic/gin"
 )

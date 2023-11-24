@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"ee-go/eerror"
+	"github.com/wallace5303/ee-go/eerror"
 )
 
 var (

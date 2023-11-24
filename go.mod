@@ -1,4 +1,4 @@
-module ee-go
+module github.com/wallace5303/ee-go
 
 go 1.20
 
