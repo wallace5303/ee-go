@@ -7,8 +7,8 @@ import (
 	"syscall"
 	"time"
 
-	"ee-go/elog"
-	"ee-go/eruntime"
+	"github.com/wallace5303/ee-go/elog"
+	"github.com/wallace5303/ee-go/eruntime"
 )
 
 var (

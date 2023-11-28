@@ -9,16 +9,16 @@ import (
 	"strconv"
 	"strings"
 
-	"ee-go/eapp"
-	"ee-go/econfig"
-	"ee-go/eerror"
-	"ee-go/ehelper"
-	"ee-go/ehttp"
-	"ee-go/elog"
-	"ee-go/eos"
-	"ee-go/eruntime"
-	"ee-go/estatic"
-	"ee-go/test"
+	"github.com/wallace5303/ee-go/eapp"
+	"github.com/wallace5303/ee-go/econfig"
+	"github.com/wallace5303/ee-go/eerror"
+	"github.com/wallace5303/ee-go/ehelper"
+	"github.com/wallace5303/ee-go/ehttp"
+	"github.com/wallace5303/ee-go/elog"
+	"github.com/wallace5303/ee-go/eos"
+	"github.com/wallace5303/ee-go/eruntime"
+	"github.com/wallace5303/ee-go/estatic"
+	"github.com/wallace5303/ee-go/test"
 )
 
 var (

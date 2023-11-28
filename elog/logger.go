@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"ee-go/eerror"
+	"github.com/wallace5303/ee-go/eerror"
 
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
@@ -15,7 +15,7 @@ import (
 
 var (
 	LogDir     string // electron-egg logs directory
-	LogName    = "ee-go.log"
+	LogName    = "github.com/wallace5303/ee-go.log"
 	Logger     *zap.SugaredLogger
 	CoreLogger *zap.SugaredLogger
 )

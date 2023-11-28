@@ -3,11 +3,11 @@ package econfig
 import (
 	"path/filepath"
 
-	"ee-go/eerror"
-	"ee-go/ehelper"
-	"ee-go/eruntime"
-	"ee-go/estatic"
-	"ee-go/eutil"
+	"github.com/wallace5303/ee-go/eerror"
+	"github.com/wallace5303/ee-go/ehelper"
+	"github.com/wallace5303/ee-go/eruntime"
+	"github.com/wallace5303/ee-go/estatic"
+	"github.com/wallace5303/ee-go/eutil"
 
 	"github.com/spf13/viper"
 )

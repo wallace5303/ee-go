@@ -1,11 +1,12 @@
 package eutil
 
 import (
-	"ee-go/eerror"
-	"ee-go/ehelper"
 	"encoding/json"
 	"fmt"
 	"os"
+
+	"github.com/wallace5303/ee-go/eerror"
+	"github.com/wallace5303/ee-go/ehelper"
 )
 
 // Read json strict

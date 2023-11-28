@@ -1,8 +1,9 @@
 package test
 
 import (
-	"ee-go/eruntime"
 	"fmt"
+
+	"github.com/wallace5303/ee-go/eruntime"
 )
 
 func Info() {
