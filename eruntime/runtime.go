@@ -30,7 +30,7 @@ var (
 )
 
 var (
-	Port                = "7073"
+	Port                = "0"
 	SSL                 = false
 	HttpServerIsRunning = false
 )

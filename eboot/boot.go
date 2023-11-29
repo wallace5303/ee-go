@@ -18,7 +18,6 @@ import (
 	"github.com/wallace5303/ee-go/eos"
 	"github.com/wallace5303/ee-go/eruntime"
 	"github.com/wallace5303/ee-go/estatic"
-	"github.com/wallace5303/ee-go/test"
 )
 
 var (
@@ -37,7 +36,7 @@ func New(staticFS embed.FS) *Ego {
 	// args
 	environment := flag.String("env", "prod", "dev/prod")
 	baseDir := flag.String("basedir", "./", "base directory")
-	port := flag.String("port", "", "service port")
+	port := flag.String("port", "0", "service port")
 	ssl := flag.String("ssl", "false", "https/wss service")
 	debug := flag.String("debug", "false", "debug")
 	flag.Parse()
@@ -50,10 +49,7 @@ func New(staticFS embed.FS) *Ego {
 	eruntime.ENV = *environment
 	eruntime.Debug, _ = strconv.ParseBool(*debug)
 	eruntime.BaseDir = filepath.Join(eruntime.BaseDir, *baseDir)
-	cmdGoPort, err := strconv.Atoi(*port)
-	if err == nil && cmdGoPort > 0 {
-		eruntime.Port = *port
-	}
+	eruntime.Port = *port
 	eruntime.SSL, _ = strconv.ParseBool(*ssl)
 
 	// static "./public"
@@ -62,7 +58,7 @@ func New(staticFS embed.FS) *Ego {
 	initApp()
 
 	// debug
-	test.Info()
+	//test.Info()
 
 	ego := &Ego{}
 	return ego
