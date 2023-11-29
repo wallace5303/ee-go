@@ -61,8 +61,8 @@ func CreateServer(cfg map[string]any) {
 	loadAssets()
 	loadViews()
 
-	protocol := Conf["protocol"].(string)
-	hostname := Conf["hostname"].(string)
+	protocol := "http://"
+	hostname := "127.0.0.1"
 	network := Conf["network"].(bool)
 	if network {
 		hostname = "0.0.0.0"
