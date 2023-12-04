@@ -107,7 +107,7 @@ func initUserDir() {
 	}
 
 	eruntime.WorkDir = eruntime.BaseDir
-	if eruntime.IsPord() {
+	if eruntime.IsProd() {
 		// userhome/appname
 		eruntime.WorkDir = filepath.Join(eruntime.UserHomeDir, eruntime.AppName)
 		// windows, userhome/Documents/appname
