@@ -11,7 +11,7 @@ import (
 	"github.com/wallace5303/ee-go/eutil"
 )
 
-// package.json
+// read electron package.json
 func ReadPackage() map[string]any {
 	var ret map[string]any
 

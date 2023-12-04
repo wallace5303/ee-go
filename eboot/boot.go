@@ -25,13 +25,16 @@ var (
 // cmdPort = "0"
 )
 
+// ee-go instance type
 type Ego struct {
 }
 
+// run program
 func (ego *Ego) Run() {
 	eapp.Run()
 }
 
+// create new ego
 func New(staticFS embed.FS) *Ego {
 	// args
 	environment := flag.String("env", "prod", "dev/prod")
@@ -64,6 +67,7 @@ func New(staticFS embed.FS) *Ego {
 	return ego
 }
 
+// Initialize the app
 func initApp() {
 
 	// init dir
@@ -96,6 +100,7 @@ func initApp() {
 
 }
 
+// Initialize user directory
 func initUserDir() {
 	eruntime.UserHomeDir, _ = eos.GetUserHomeDir()
 	eruntime.UserHomeConfDir = filepath.Join(eruntime.UserHomeDir, ".config", eruntime.AppName)

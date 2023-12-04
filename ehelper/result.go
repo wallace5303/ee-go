@@ -6,6 +6,7 @@ type ResultJson struct {
 	Data any    `json:"data"`
 }
 
+// Return a result in json format
 func GetJson() *ResultJson {
 	return &ResultJson{
 		Code: 0,

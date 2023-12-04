@@ -15,6 +15,7 @@ var (
 	exitLock = sync.Mutex{}
 )
 
+// Run the program and listen for Signal
 func Run() {
 	sigCh := make(chan os.Signal)
 	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
