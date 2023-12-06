@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Merge map
 func Mapserge(src, tgt map[string]any, itgt map[any]any) {
 	mergeMaps(src, tgt, itgt)
 }

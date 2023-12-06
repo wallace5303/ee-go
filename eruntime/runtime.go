@@ -12,11 +12,10 @@ var (
 	// progressBar  float64 // 0 ~ 100
 	// progressDesc string  // description
 
-	HttpServer = false
-	AppName    = ""
-	Platform   = "pc" // pc | mobile | web
-	IsExiting  = false
-	Debug      = false
+	AppName   = ""
+	Platform  = "pc" // pc | mobile | web
+	IsExiting = false
+	Debug     = false
 )
 
 var (
@@ -30,7 +29,7 @@ var (
 )
 
 var (
-	Port                = "7073"
+	Port                = "0"
 	SSL                 = false
 	HttpServerIsRunning = false
 )
@@ -40,7 +39,7 @@ func InitDir() {
 }
 
 // Pwd gets the path of current working directory.
-func IsPord() bool {
+func IsProd() bool {
 	return (ENV == "prod")
 }
 

@@ -16,6 +16,7 @@ var (
 	Vip *viper.Viper
 )
 
+// Initialize config
 func Init() {
 	var defaultCfg map[string]any
 	var envCfg map[string]any
@@ -65,14 +66,18 @@ func Init() {
 	//fmt.Println("defaultCfg: ", Vip.AllSettings())
 }
 
+// Get can retrieve any value given the key to use.
+// Get is case-insensitive for a key.
 func Get(key string) any {
 	return Vip.Get(key)
 }
 
+// Return all config as a map[string]any.
 func GetAll() map[string]any {
 	return Vip.AllSettings()
 }
 
+// Return logger config as a map[string]any.
 func GetLogger() map[string]any {
 	cfg := Vip.Get("logger")
 	logCfg, ok := cfg.(map[string]any)
@@ -82,6 +87,7 @@ func GetLogger() map[string]any {
 	return logCfg
 }
 
+// Return coreLogger config as a map[string]any.
 func GetCoreLogger() map[string]any {
 	cfg := Vip.Get("core_logger")
 	logCfg, ok := cfg.(map[string]any)
@@ -91,6 +97,7 @@ func GetCoreLogger() map[string]any {
 	return logCfg
 }
 
+// Return http config as a map[string]any.
 func GetHttp() map[string]any {
 	cfg := Vip.Get("http")
 	httpCfg, ok := cfg.(map[string]any)
@@ -101,6 +108,7 @@ func GetHttp() map[string]any {
 	return httpCfg
 }
 
+// Return static config as a map[string]any.
 func GetStatic() map[string]any {
 	cfg := Vip.Get("static")
 	staticCfg, ok := cfg.(map[string]any)

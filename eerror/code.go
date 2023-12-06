@@ -24,8 +24,9 @@ const (
 	ExitConfigGenerate = -21
 
 	// http
-	ExitListenPortErr  = -31
+	ExitPortIsOccupied = -31
 	ExitHttpStartupErr = -32
+	ExitListenPortErr  = -33
 
 	// static
 

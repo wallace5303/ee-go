@@ -34,7 +34,6 @@ var (
 	PlatformBrowser = "browser"
 	PlatformPhone   = "phone"
 	PlatformPad     = "pad"
-	//Context *gin.Context
 
 	Conf map[string]any
 )
@@ -62,19 +61,28 @@ func CreateServer(cfg map[string]any) {
 	loadAssets()
 	loadViews()
 
-	protocol := Conf["protocol"].(string)
-	hostname := Conf["hostname"].(string)
+	protocol := "http://"
+	hostname := "127.0.0.1"
 	network := Conf["network"].(bool)
 	if network {
 		hostname = "0.0.0.0"
 	}
-	portStr := eruntime.Port
-	cfgPort := int(Conf["port"].(float64))
-	if cfgPort > 0 {
-		portStr = strconv.Itoa(cfgPort)
+
+	// config port
+	port := strconv.Itoa(int(Conf["port"].(float64)))
+	// cmd port
+	cmdPort, err := strconv.Atoi(eruntime.Port)
+	if err == nil && cmdPort > 0 {
+		port = eruntime.Port
 	}
 
-	address := hostname + ":" + portStr
+	// check port
+	if IsPortOpen(port) {
+		elog.CoreLogger.Errorf("[ee-go] The port:%s already in use", port)
+		eerror.ThrowWithCode("", eerror.ExitPortIsOccupied)
+	}
+
+	address := hostname + ":" + port
 	ln, err := net.Listen("tcp", address)
 	if nil != err {
 		elog.CoreLogger.Errorf("[ee-go] http server startup failure : %s", err)
