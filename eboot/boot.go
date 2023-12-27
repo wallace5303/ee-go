@@ -18,10 +18,6 @@ import (
 	"github.com/wallace5303/ee-go/eos"
 	"github.com/wallace5303/ee-go/eruntime"
 	"github.com/wallace5303/ee-go/estatic"
-<<<<<<< HEAD
-	"github.com/wallace5303/ee-go/test"
-=======
->>>>>>> main
 )
 
 var (
