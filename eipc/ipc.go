@@ -16,7 +16,7 @@ const (
 )
 
 type Bridge struct {
-	lbr         *BridgeReader
+	br          *BridgeReader
 	eventMap    map[string]EventCallback
 	closeChan   chan int
 	established bool
@@ -31,7 +31,7 @@ type Context struct {
 	Id      string
 	Data    string
 	Options map[string]string
-	lbRef   *Bridge
+	bRef    *Bridge
 }
 
 type EventCallback func(Context)
@@ -48,13 +48,13 @@ func Init() {
 }
 
 // implement io.Reader Read
-func (lbr *BridgeReader) Read(p []byte) (n int, err error) {
+func (br *BridgeReader) Read(p []byte) (n int, err error) {
 	// 后去传递的数据的有效负载长度
 	length := syscall.CmsgSpace(4)
 	mbuf := make([]byte, length)
 	// 将收到的数据从内核空间拷贝至用户空间
 	// oob: Out of band data https://beej.us/298C/oob_overview.html
-	n, _, _, _, err = syscall.Recvmsg(int(lbr.fd.Fd()), p, mbuf, 0)
+	n, _, _, _, err = syscall.Recvmsg(int(br.fd.Fd()), p, mbuf, 0)
 	if err != nil {
 		return 0, err
 	}
@@ -63,11 +63,11 @@ func (lbr *BridgeReader) Read(p []byte) (n int, err error) {
 
 func Establish() *Bridge {
 	reader := establishChannel()
-	lb := &Bridge{
-		lbr:      reader,
+	b := &Bridge{
+		br:       reader,
 		eventMap: make(map[string]EventCallback),
 	}
-	return lb
+	return b
 }
 
 func establishChannel() *BridgeReader {
@@ -79,21 +79,21 @@ func establishChannel() *BridgeReader {
 	return reader
 }
 
-func (lb *Bridge) On(event string, callback EventCallback) {
-	lb.eventMap[event] = callback
+func (b *Bridge) On(event string, callback EventCallback) {
+	b.eventMap[event] = callback
 }
 
-func (lb *Bridge) Listen() {
-	lb.closeChan = make(chan int)
+func (b *Bridge) Listen() {
+	b.closeChan = make(chan int)
 	go func() {
-		lb.listen()
+		b.listen()
 	}()
-	lb.sendByType("ready", "establish")
-	<-lb.closeChan
+	b.sendByType("ready", "establish")
+	<-b.closeChan
 }
 
-func (lb *Bridge) sendByType(data string, msgType string) error {
-	fd := int(lb.lbr.fd.Fd())
+func (b *Bridge) sendByType(data string, msgType string) error {
+	fd := int(b.br.fd.Fd())
 	responseMsg := Message{
 		Id:      "go::1",
 		Data:    data,
@@ -103,18 +103,18 @@ func (lb *Bridge) sendByType(data string, msgType string) error {
 	return syscall.Sendmsg(fd, append(jsonData, '\n'), nil, nil, 0)
 }
 
-func (lb *Bridge) listen() {
+func (b *Bridge) listen() {
 	for {
-		lb.tryGetMessage()
-		// execCount, _ := lb.tryGetMessage()
+		b.tryGetMessage()
+		// execCount, _ := b.tryGetMessage()
 		// if execCount <= 0 {
 		// 	time.Sleep(time.Microsecond * 100)
 		// }
 	}
 }
 
-func (lb *Bridge) tryGetMessage() (int, error) {
-	data, err := lb.lbr.reader.ReadBytes('\n')
+func (b *Bridge) tryGetMessage() (int, error) {
+	data, err := b.br.reader.ReadBytes('\n')
 	if err != nil {
 		return 0, err
 	}
@@ -124,27 +124,27 @@ func (lb *Bridge) tryGetMessage() (int, error) {
 	if event == "ready" {
 		event = "establish"
 	} else if event == "close" {
-		lb.closeChan <- 1
-	} else if !lb.established {
+		b.closeChan <- 1
+	} else if !b.established {
 		return 0, nil
 	}
-	eventListener, exists := lb.eventMap[event]
+	eventListener, exists := b.eventMap[event]
 	if !exists {
 		return 0, nil
 	}
 	go eventListener(Context{
-		Id:    msg.Id,
-		Data:  msg.Data,
-		lbRef: lb,
+		Id:   msg.Id,
+		Data: msg.Data,
+		bRef: b,
 	})
 	if event == "establish" {
-		lb.established = true
+		b.established = true
 	}
 	return 1, nil
 }
 
 func (ctx *Context) Response(data string) error {
-	fd := int(ctx.lbRef.lbr.fd.Fd())
+	fd := int(ctx.bRef.br.fd.Fd())
 	responseMsg := Message{
 		Id:      ctx.Id,
 		Data:    data,
