@@ -8,3 +8,16 @@ func FileIsExist(path string) bool {
 
 	return err == nil || os.IsExist(err)
 }
+
+// IsDir
+func IsDir(path string) bool {
+	fio, err := os.Lstat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+
+	if err != nil {
+		return false
+	}
+	return fio.IsDir()
+}
