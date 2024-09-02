@@ -107,9 +107,21 @@ func run(ln net.Listener) {
 // set CORS
 func setCors() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.Header("Access-Control-Allow-Origin", "*")
-		ctx.Header("Access-Control-Allow-Headers", "*")
-		ctx.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Cache-Control, Content-Language, Content-Type")
+		// fix:前端跨域问题
+		if (ctx.Request.Header["Origin"] != nil) && (ctx.Request.Header["Origin"][0] != "") {
+			ctx.Header("Access-Control-Allow-Origin", ctx.Request.Header["Origin"][0])
+		} else {
+			ctx.Header("Access-Control-Allow-Origin", "*")
+		}
+		keys := make([]string, 0, len(ctx.Request.Header))
+		for k := range ctx.Request.Header {
+			keys = append(keys, k)
+		}
+		if len(keys) > 0 {
+			ctx.Header("Access-Control-Allow-Headers", strings.Join(keys, ","))
+		} else {
+			ctx.Header("Access-Control-Allow-Headers", "*")
+		}
 		ctx.Header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, HEAD, UPDATE, OPTIONS")
 		ctx.Header("Access-Control-Allow-Private-Network", "true")
 		ctx.Header("Access-Control-Allow-Credentials", "true")
