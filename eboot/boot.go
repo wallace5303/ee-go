@@ -14,7 +14,6 @@ import (
 	"github.com/wallace5303/ee-go/eerror"
 	"github.com/wallace5303/ee-go/ehelper"
 	"github.com/wallace5303/ee-go/ehttp"
-	"github.com/wallace5303/ee-go/eipc"
 	"github.com/wallace5303/ee-go/elog"
 	"github.com/wallace5303/ee-go/eos"
 	"github.com/wallace5303/ee-go/eruntime"
@@ -92,9 +91,6 @@ func initApp() {
 	logCfg := econfig.GetLogger()
 	elog.InitCoreLog(coreLogCfg)
 	elog.InitLog(logCfg)
-
-	// ipc
-	eipc.Init()
 
 	// http server
 	httpCfg := econfig.GetHttp()
