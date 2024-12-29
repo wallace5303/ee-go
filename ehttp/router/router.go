@@ -34,7 +34,7 @@ func Handle(httpMethod, path string, handler HandlerFunc) {
 	GinRouter.Handle(httpMethod, path, func(gc *gin.Context) {
 		ctx := &Ctx{GinCtx: gc}
 		begin := time.Now()
-		bindErr := ctx.GinCtx.BindJSON(&ctx.Args)
+		bindErr := ctx.GinCtx.ShouldBindJSON(&ctx.Args)
 		if bindErr != nil {
 			ctx.Args = nil
 			//elog.CoreLogger.Errorf("bind args err: %+v", ctx.Args)
