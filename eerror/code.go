@@ -10,6 +10,8 @@ const (
 	ExitCreateLogDir          = -5
 	ExitCreateTmpDir          = -6
 	ExitPackageFile           = -7
+	ExitCreateUserHomeAppDir  = -8
+	ExitCreateDBDir           = -9
 
 	// config
 	ExitConfigFile         = -11

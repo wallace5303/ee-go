@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 
 	"github.com/wallace5303/ee-go/eapp"
 	"github.com/wallace5303/ee-go/econfig"
@@ -110,24 +109,19 @@ func initUserDir() {
 			eerror.ThrowWithCode(errMsg, eerror.ExitCreateUserHomeConfDir)
 		}
 	}
+	hiddenAppName := fmt.Sprintf(".%s", eruntime.AppName)
+	eruntime.UserHomeAppDir = filepath.Join(eruntime.UserHomeDir, hiddenAppName)
+	if !ehelper.FileIsExist(eruntime.UserHomeAppDir) {
+		if err := os.MkdirAll(eruntime.UserHomeAppDir, 0755); err != nil && !os.IsExist(err) {
+			errMsg := fmt.Sprintf("create user home app folder [%s] failed: %s", eruntime.UserHomeAppDir, err)
+			eerror.ThrowWithCode(errMsg, eerror.ExitCreateUserHomeAppDir)
+		}
+	}
 
 	eruntime.WorkDir = eruntime.BaseDir
 	if eruntime.IsProd() {
-		// userhome/appname
-		eruntime.WorkDir = filepath.Join(eruntime.UserHomeDir, eruntime.AppName)
-		// windows, userhome/Documents/appname
-		if eos.IsWindows() {
-			userProfile := os.Getenv("USERPROFILE")
-			// fmt.Println("userProfile:", userProfile)
-			if userProfile != "" {
-				// 判断一下userProfile路径中 有没有 Documents
-				if strings.Contains(userProfile, "Documents") {
-					eruntime.WorkDir = filepath.Join(userProfile, eruntime.AppName)
-				} else {
-					eruntime.WorkDir = filepath.Join(userProfile, "Documents", eruntime.AppName)
-				}
-			}
-		}
+		// userhome/.appname
+		eruntime.WorkDir = eruntime.UserHomeAppDir
 	}
 	if !ehelper.FileIsExist(eruntime.WorkDir) {
 		if err := os.MkdirAll(eruntime.WorkDir, 0755); err != nil && !os.IsExist(err) {

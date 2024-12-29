@@ -23,6 +23,7 @@ var (
 	PublicDir       string // electron-egg public directory
 	UserHomeDir     string // OS user home directory
 	UserHomeConfDir string // OS user home config directory
+	UserHomeAppDir  string // OS user home app directory
 	WorkDir         string // App working directory
 	DataDir         string // data directory
 	TmpDir          string // tmp directory
