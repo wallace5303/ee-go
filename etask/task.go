@@ -107,7 +107,7 @@ func Status() {
 	}
 
 	if eruntime.IsDev() {
-		elog.Logger.Infoln("task status data: ", items)
+		elog.Logger.Infof("task status data: ", items)
 	}
 }
 
